@@ -213,7 +213,7 @@ public class MusicbrainzDao {
             "  ELSE 0\n" +
             "  END AS is_studio_album\n" +
             "FROM (\n" +
-            "       SELECT DISTINCT ON (release_group_id)\n" +
+            "       SELECT DISTINCT ON (release_mbid)\n" +
             "         sum(track_count)\n" +
             "         OVER (PARTITION BY release_id) total_tracks,\n" +
             "         *\n" +
@@ -259,7 +259,7 @@ public class MusicbrainzDao {
             "                                                    WHERE j.release_group = r.id))\n" +
             "                                           OR ?)\n" +
             "            )\n" +
-            "         AS tbl ORDER BY release_group_id, year ASC) AS tbl2\n" +
+            "         AS tbl ORDER BY release_mbid, year ASC) AS tbl2\n" +
             "ORDER BY rank DESC, year, month\n";
 
     private static final String RELEASE_BY_ARTIST = "SELECT\n" +
