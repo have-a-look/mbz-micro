@@ -157,7 +157,7 @@ public class MusicbrainzDao {
             "              SELECT\n" +
             "                r.type,\n" +
             "                re.country,\n" +
-            "                medium.track_count         AS total_tracks,\n" +
+            "                sum(medium.track_count) OVER (PARTITION BY rel.id) as total_tracks,\n" +
             "                medium.id                  AS medium_id,\n" +
             "                r.id                       AS release_group_id,\n" +
             "                rel.id                     AS release_id,\n" +
@@ -327,7 +327,7 @@ public class MusicbrainzDao {
             "  t.position       AS position,\n" +
             "  tbl2.disc_number AS disc_number\n" +
             "FROM (\n" +
-            "       SELECT DISTINCT ON (release_group_id)\n" +
+            "       SELECT\n" +
             "         sum(track_count)\n" +
             "         OVER (PARTITION BY release_id) total_tracks,\n" +
             "         *\n" +
